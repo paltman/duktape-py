@@ -1,9 +1,16 @@
+import os
 import sys
 from distutils.core import setup,Extension
 from Cython.Build import cythonize
 
+if os.environ.get("CYTHON_TRACE"):
+    MACROS = [("CYTHON_TRACE", 1)]
+else:
+    MACROS = []
+
 duk_c=Extension(
   'duktape',
+  define_macros=MACROS,
   sources=[
     'duktape.pyx',
     'duktape_c/duktape.c',
